@@ -234,6 +234,101 @@ Userid를 받아와서 그 userid가 담은 cart정보를 보여주기때문에 
 남은 userid가 가진 cart정보를 select해주는  CartListServlet  코드로 Dispatcher해주는것임<br>
 <br>
 ※카트갯수 수정 코드구현<br>
+![image](https://user-images.githubusercontent.com/83156401/120101806-eb265800-c182-11eb-99c0-c470a4d474c5.png)<br>
+->Goods/cartList코드<br>
+![image](https://user-images.githubusercontent.com/83156401/120101811-faa5a100-c182-11eb-8347-bc52879d06d3.png)<br>
+->수량적는부분의 id를 각각 num별로 따로주려고 뒤에 +num을 붙여줌<br>
+Form input의 수량부분에 Id를 따로주지않으면 수량의 val값을 꺼내올때 아이디가 같아 주문번호가 겹쳐 구분을 할수가없어서
+원하는 주문번호의 수량값을 꺼내올수없기때문<br>
+![image](https://user-images.githubusercontent.com/83156401/120101843-21fc6e00-c183-11eb-87ee-3be54b1fe519.png)<br>
+수정버튼을 클릭하면 num값과 gprice값이 넘어가게 설정<br>
+![image](https://user-images.githubusercontent.com/83156401/120101855-2e80c680-c183-11eb-8cf8-2d39b3720b52.png)<br>
+수량수정버튼을 클릭하면 주문번호와 수량,가격을 받아오게 코드구현<br>
+![image](https://user-images.githubusercontent.com/83156401/120101869-43f5f080-c183-11eb-978e-c2255f9cd2e6.png)<br>
+수정후 가격을 출력하는 span 부분에도 id에 sum<%=num%>을 해줘 총합을 수정해서 넣을때 구분해줄수있는 id로 코드구현<br>
+![image](https://user-images.githubusercontent.com/83156401/120101880-5708c080-c183-11eb-9755-8c51d6df14c7.png)<br>
+->Goods/cartList 코드, CartUpdateServlet으로 주문번호와 수량을 받아온걸 넘겨준다<br>
+![image](https://user-images.githubusercontent.com/83156401/120101930-9afbc580-c183-11eb-85be-18c996db61d8.png)<br>
+->Com.controller.goods.CartUpdateServlet코드<br>
+Goods/cartList코드에서 num과 amount값을 받아와 파싱해주고<br> 
+이 값을 map에 담아 수량이 변경되면 num에 맞는 cart정보를 새로 update해주는 코드구현<br>
+![image](https://user-images.githubusercontent.com/83156401/120101977-de563400-c183-11eb-932b-918c5244d50a.png)<br>
+->Goods/cartList 코드, 수정버튼을 눌렀을때 합계부분에 다시 amount*price가 재설정되게 코드구현
+(#sum+num 인 이유는 상품들을구분해주기위에 id를 sum+<%=num%>으로 주었었음<br>
+※체크박스로 선택한 카트삭제 코드구현<br>
+![image](https://user-images.githubusercontent.com/83156401/120102024-0e053c00-c184-11eb-8f72-3a98ee284bfb.png)<br>
+->Goods/cartList코드, 전체선택버튼을 누르면 체크박스가 전체선택되는 코드구현 <br>
+![image](https://user-images.githubusercontent.com/83156401/120102039-2412fc80-c184-11eb-86a9-d6fb89c39dbe.png)<br>
+Href에 #으로 링크이동하지못하게 막아놈<br>
+![image](https://user-images.githubusercontent.com/83156401/120102056-3ab95380-c184-11eb-8cb9-578dda86c63e.png)<br>
+->Goods/cartList코드,전체삭제하기를 눌렀을때 선택된 체크박스의 주문번호들을 배열로 받아 생성하는<br>
+코드 구현후 CarDelAllServlet으로 num을 받아 넘겨주기<br>
+![image](https://user-images.githubusercontent.com/83156401/120102073-4d338d00-c184-11eb-882a-0248e756dc3d.png)<br>
+->Com.controller.goods.CartDellAllServlet 코드, Data로 num(주문번호)들을 받아 list로 생성해 이 list들을 mapper에 넘겨줌 <br>
+![image](https://user-images.githubusercontent.com/83156401/120102123-810eb280-c184-11eb-9d65-3eb3e16dec53.png)<br>
+For each로 돌아가면서 list안에 num을 뽑아와 delete 시켜줌<br>
+<br>
+※form안에 데이터(주문번호)를 받아 삭제하는 코드구현<br>
+![image](https://user-images.githubusercontent.com/83156401/120102137-95eb4600-c184-11eb-8c32-a77091495a57.png)<br>
+![image](https://user-images.githubusercontent.com/83156401/120102141-997ecd00-c184-11eb-9a10-1ea4ee1d8137.png)
+전체삭제하기를 클릭하면 CartDelAllServlet2로 넘겨줌<br>
+![image](https://user-images.githubusercontent.com/83156401/120102191-c6cb7b00-c184-11eb-9f03-e19fe14e8e60.png)<br>
+->Com.controller.goods.CartDelAllServlet2 코드,Check로 data를 배열로 받아오고 (values) data를 List에 넣어서 삭제해줌<br>
+<br>
+※개별주문확인코드 구현하기<br>
+![image](https://user-images.githubusercontent.com/83156401/120102234-f8dcdd00-c184-11eb-8e5c-d3ba55f5bf68.png)<br>
+->Goods/cartList코드,주문버튼을 눌렀을때 주문번호를 받아올수있게 data-xxx에 num을 넣어줌<br>
+![image](https://user-images.githubusercontent.com/83156401/120102260-1b6ef600-c185-11eb-8743-ed5269ac647a.png)<br>
+주문버튼 클릭시 data-xxx에 설정해준 주문번호 num과 함께 CartOrderConfirmServlet으로 이동<br>
+![image](https://user-images.githubusercontent.com/83156401/120102273-288be500-c185-11eb-8795-d01bb2876cc5.png)<br>
+->Com.controller.goods.CartOrderConfirmServlet코드<br>
+Userid를 받아와 memberdto 생성해 멤버정보받아와 mdto라는 키값으로 request저장<br>
+Num(주문번호)를 받아와 cartdto를 생성해 카트정보받아와 cdto라는 키값으로 request저장<br>
+그후 orderConfirm으로 이동시켜주는 dispatcher코드 작성<br>
+![image](https://user-images.githubusercontent.com/83156401/120102287-3e99a580-c185-11eb-9137-c3bae832d899.png)<br>
+->Webcontent/orderConfirm코드<br>
+![image](https://user-images.githubusercontent.com/83156401/120102298-48230d80-c185-11eb-9969-b39c64dd8e92.png)<br>
+->Order/orderConfirm코드<br>
+Com.controller.goods.CartOrderConfirmServlet코드에서 설정해준 request값을 가져와 하나씩 필요한 값을 뽑아줌<br>
+뽑아준후 form에 집어넣어주는 코드구현<br>
+<br>
+※주문버튼눌러 주문하는 코드구현<br>
+![image](https://user-images.githubusercontent.com/83156401/120102320-638e1880-c185-11eb-9a9e-ff910b87ab19.png)<br>
+Db에 Orderinfo 테이블 만들어주기 <br>
+![image](https://user-images.githubusercontent.com/83156401/120102332-6e48ad80-c185-11eb-8473-eb2c84b42233.png)<br>
+->Order/orderConfirm코드,주문정보값들을 hidden으로 숨겨 CartOrderDoneServlet으로 넘겨줌<br>
+![image](https://user-images.githubusercontent.com/83156401/120102347-802a5080-c185-11eb-8c8d-05465cfda8df.png)<br>
+->Com.controller.goods.CartOrderDoneServlet코드<br>
+Order/orderConfirm코드안에 값들을 받아와 파싱해 OrderDTO dto2 객체에 넣어줌<br>
+![image](https://user-images.githubusercontent.com/83156401/120102363-8f110300-c185-11eb-84dc-1f475da10a16.png)<br>
+받아온 ordernum(주문번호)와 dto2객체를 넘겨서 <br>
+Num은 cart테이블로 찾아가 delete, dto2객체는 orderinfo를 찾아가 insert해주는 코드구현 <br>
+Dto2객체를 orderDTO키안에 request해주고 order/orderDone으로 넘겨줌<br>
+![image](https://user-images.githubusercontent.com/83156401/120102375-a0f2a600-c185-11eb-94dd-42247f09b6e0.png)<br>
+->Order/orderDone코드<br>
+Com.controller.goods.CartOrderDoneServlet코드에서 request해준 orderdto키값을 <br>
+Dto로 담아 값들을 하나씩 뽑아 form의 알맞은 위치에 값 넣어주기<br>
+주문완료 form을 띄어주는 부분 <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
